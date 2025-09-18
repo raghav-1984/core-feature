@@ -56,7 +56,7 @@
                  For example: src="/logo.jpeg"
             -->
             <a href="#" class="nav-link" data-page="home">
-                <img src="/logo.png" alt="Cuffe Capital Advisors Logo" class="h-10">
+                <img src="https://placehold.co/200x50/1E40AF/FFFFFF?text=Cuffe+Capital&font=inter" alt="Cuffe Capital Advisors Logo" class="h-10">
             </a>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#" class="text-gray-600 hover:text-blue-800 font-medium transition duration-300 nav-link" data-page="finder">AIF Finder</a>
@@ -409,12 +409,22 @@ const analytics = getAnalytics(app);
             
             fetchFunds();
 
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
+            // *** FIX: Use Event Delegation for Navigation ***
+            document.body.addEventListener('click', (e) => {
+                const navLink = e.target.closest('.nav-link');
+                if (navLink) {
                     e.preventDefault();
-                    const pageId = e.currentTarget.dataset.page;
-                    showPage(pageId);
-                });
+                    const pageId = navLink.dataset.page;
+                    if (pageId) {
+                        showPage(pageId);
+                        
+                        // Close mobile menu on navigation
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                }
             });
 
             document.getElementById('apply-filters')?.addEventListener('click', applyFilters);
