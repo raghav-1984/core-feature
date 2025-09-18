@@ -167,14 +167,12 @@
     </footer>
 
     <script type="module">
-      // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // =================================================================
+        // ||   ACTION REQUIRED: PASTE YOUR FIREBASE CONFIGURATION HERE   ||
+        // =================================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAQYeeLnJ4OHhsUX50FunMb7x9fyVXP7ek",
   authDomain: "cuffe-capital-advisors-7fba2.firebaseapp.com",
@@ -185,9 +183,6 @@ const firebaseConfig = {
   measurementId: "G-K9D5GKQSWX"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
         // =================================================================
 
         let allFunds = [];
