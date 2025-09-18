@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuffe Capital Advisors - DEBUG MODE</title>
+    <title>Cuffe Capital Advisors - Alternative Investment Funds (AIF) Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,18 +102,62 @@
         <div id="page-finder" class="page">
             <div class="container mx-auto p-6">
                 <h2 class="text-3xl font-bold mb-6">Alternative Investment Fund Finder</h2>
-                 <div id="aif-list" class="space-y-4">
-                     <div class="text-center py-10 bg-yellow-100 border border-yellow-400 text-yellow-800 rounded-lg">
-                        <p class="text-lg font-semibold">Database is temporarily disconnected for debugging.</p>
-                        <p>Fund list will appear here once the connection is restored.</p>
+                <div class="bg-white p-6 rounded-lg soft-shadow mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                    <div>
+                        <label for="search-text" class="block text-sm font-medium text-gray-700">Search Fund/Manager</label>
+                        <input type="text" id="search-text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="filter-strategy" class="block text-sm font-medium text-gray-700">Strategy</label>
+                        <select id="filter-strategy" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="All">All Strategies</option>
+                            <option value="Long Short">Long Short</option>
+                            <option value="Private Equity">Private Equity</option>
+                            <option value="Venture Capital">Venture Capital</option>
+                            <option value="Real Estate">Real Estate</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-returns" class="block text-sm font-medium text-gray-700">Min. 1Y Return (%)</label>
+                        <input type="number" id="filter-returns" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 15">
+                    </div>
+                     <div>
+                        <button id="apply-filters" class="w-full cta-button text-white font-semibold py-2 px-4 rounded-lg shadow-md">Apply Filters</button>
+                    </div>
+                </div>
+                <div id="aif-list" class="space-y-4">
+                     <div id="loader" class="text-center py-10">
+                        <p class="text-lg font-semibold">Loading funds...</p>
                      </div>
                 </div>
             </div>
         </div>
-        <!-- Other pages remain the same -->
-        <div id="page-detail" class="page">...</div>
-        <div id="page-about" class="page">...</div>
-        <div id="page-contact" class="page">...</div>
+
+        <!-- Fund Detail Page -->
+        <div id="page-detail" class="page">
+            <div class="container mx-auto p-6">
+                <button class="mb-6 bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300 nav-link" data-page="finder">&larr; Back to AIF Finder</button>
+                <div id="fund-detail-content">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- About Us Page -->
+        <div id="page-about" class="page">
+             <div class="container mx-auto p-6 py-16">
+                <h2 class="text-4xl font-bold mb-6 text-center">About Cuffe Capital Advisors</h2>
+                <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">Cuffe Capital Advisors was founded with a singular mission: to bring transparency, clarity, and data-driven insights to the often opaque world of Alternative Investment Funds in India. Our team of financial analysts and market experts is dedicated to providing investors with the tools and research necessary to navigate the complexities of the AIF landscape and make confident, informed decisions.</p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="page-contact" class="page">
+            <div class="container mx-auto p-6 py-16">
+                <h2 class="text-4xl font-bold mb-6 text-center">Contact Us</h2>
+                <p class="text-lg text-gray-700 text-center max-w-3xl mx-auto">For inquiries, partnerships, or to learn more about our services, please reach out to us at <a href="mailto:info@cuffecapital.com" class="text-blue-700 hover:underline font-medium">info@cuffecapital.com</a>.</p>
+            </div>
+        </div>
     </main>
     
     <footer class="bg-white mt-12 border-t">
@@ -123,17 +167,35 @@
     </footer>
 
     <script type="module">
-        console.log("DEBUG: Script execution started.");
+      // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-        // --- All Firebase code is temporarily removed for this test ---
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        // import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        // const firebaseConfig = { ... };
-        // let db;
-        // try { ... } catch { ... }
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAQYeeLnJ4OHhsUX50FunMb7x9fyVXP7ek",
+  authDomain: "cuffe-capital-advisors-7fba2.firebaseapp.com",
+  projectId: "cuffe-capital-advisors-7fba2",
+  storageBucket: "cuffe-capital-advisors-7fba2.firebasestorage.app",
+  messagingSenderId: "903434312798",
+  appId: "1:903434312798:web:5068c91b422426b1b828cf",
+  measurementId: "G-K9D5GKQSWX"
+};
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+        // =================================================================
+
+        let db;
+        let allFunds = [];
+        let performanceChart = null;
+
+        // --- Core Page Navigation Logic ---
         function showPage(pageId) {
-            console.log(`DEBUG: showPage function called for page: ${pageId}`);
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
@@ -141,43 +203,171 @@
             if (newPage) {
                 newPage.classList.add('active');
                 window.scrollTo(0, 0);
-            } else {
-                console.error(`DEBUG: Page with ID 'page-${pageId}' not found!`);
             }
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("DEBUG: DOM fully loaded. Setting up UI listeners.");
-            
-            // Navigation Listener
+        function renderFunds(fundsToRender) {
+            const listElement = document.getElementById('aif-list');
+            if (!listElement) return;
+
+            listElement.innerHTML = ''; 
+            if (fundsToRender.length === 0) {
+                listElement.innerHTML = '<p class="text-center text-gray-600 py-10">No funds match your criteria.</p>';
+                return;
+            }
+
+            fundsToRender.forEach(fund => {
+                const return1Y = fund.returns?.['1y'] ?? 'N/A';
+                const return3Y = fund.returns?.['3y'] ?? 'N/A';
+
+                const fundCard = `
+                    <div class="bg-white p-6 rounded-lg soft-shadow transition duration-300 soft-shadow-hover border-l-4 border-transparent hover:border-blue-600">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                            <div class="md:col-span-2">
+                                <h3 class="text-xl font-bold text-gray-900">${fund.name ?? 'Unnamed Fund'}</h3>
+                                <p class="text-gray-600">${fund.manager ?? 'N/A'}</p>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mt-2 px-2.5 py-0.5 rounded-full">${fund.strategy ?? 'N/A'}</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-500">1Y Return</p>
+                                <p class="text-lg font-semibold">${return1Y}${return1Y !== 'N/A' ? '%' : ''}</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-500">3Y Return</p>
+                                <p class="text-lg font-semibold">${return3Y}${return3Y !== 'N/A' ? '%' : ''}</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="view-details-btn w-full bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-900 transition duration-300" data-id="${fund.id}">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listElement.innerHTML += fundCard;
+            });
+        }
+        
+        function renderFundDetails(fundId) {
+            const fund = allFunds.find(f => f.id === fundId);
+            const contentElement = document.getElementById('fund-detail-content');
+            if (!fund || !contentElement) return;
+
+            const return1Y = fund.returns?.['1y'] ?? 'N/A';
+            const return3Y = fund.returns?.['3y'] ?? 'N/A';
+            const return5Y = fund.returns?.['5y'] ?? 'N/A';
+            const returnSI = fund.returns?.si ?? 'N/A';
+
+            contentElement.innerHTML = `
+                <div class="bg-white p-8 rounded-lg soft-shadow">
+                    <h2 class="text-3xl font-bold mb-2">${fund.name ?? 'Unnamed Fund'}</h2>
+                    <p class="text-lg text-gray-600 mb-6">Managed by: ${fund.manager ?? 'N/A'}</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center p-4 bg-gray-50 rounded-lg">
+                        <div><p class="text-sm text-gray-500">Strategy</p><p class="font-semibold">${fund.strategy ?? 'N/A'}</p></div>
+                        <div><p class="text-sm text-gray-500">AUM (Cr)</p><p class="font-semibold">₹${fund.aum ?? 'N/A'}</p></div>
+                        <div><p class="text-sm text-gray-500">Inception</p><p class="font-semibold">${fund.inception ?? 'N/A'}</p></div>
+                        <div><p class="text-sm text-gray-500">Min. Investment (Cr)</p><p class="font-semibold">₹${fund.minInvestment ?? 'N/A'}</p></div>
+                    </div>
+                    <div class="mb-8"><h3 class="text-xl font-semibold mb-4">Historical Performance vs. Benchmarks</h3><div class="chart-container"><canvas id="performanceChart"></canvas></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                             <h3 class="text-xl font-semibold mb-4">Returns (%)</h3>
+                            <table class="w-full text-left"><tbody class="divide-y"><tr class="hover:bg-gray-50"><td class="py-2 font-medium">1 Year</td><td class="text-right">${return1Y}${return1Y !== 'N/A' ? '%' : ''}</td></tr><tr class="hover:bg-gray-50"><td class="py-2 font-medium">3 Years (CAGR)</td><td class="text-right">${return3Y}${return3Y !== 'N/A' ? '%' : ''}</td></tr><tr class="hover:bg-gray-50"><td class="py-2 font-medium">5 Years (CAGR)</td><td class="text-right">${return5Y}${return5Y !== 'N/A' ? '%' : ''}</td></tr><tr class="hover:bg-gray-50"><td class="py-2 font-medium">Since Inception (CAGR)</td><td class="text-right">${returnSI}${returnSI !== 'N/A' ? '%' : ''}</td></tr></tbody></table>
+                        </div>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold mb-3">Cuffe Capital's Proprietary View</h3>
+                            <p class="text-gray-700 leading-relaxed">${fund.proprietaryView ?? 'N/A'}</p>
+                        </div>
+                    </div>
+                </div>`;
+            if (fund.performanceData) { drawChart(fund.performanceData); }
+        }
+
+        function drawChart(performanceData) {
+            const ctx = document.getElementById('performanceChart')?.getContext('2d');
+            if (!ctx) return;
+            if (performanceChart) { performanceChart.destroy(); }
+            performanceChart = new Chart(ctx, { type: 'line', data: { labels: performanceData.labels, datasets: [{ label: 'Fund Performance', data: performanceData.fund, borderColor: '#1E40AF', backgroundColor: 'rgba(30, 64, 175, 0.1)', tension: 0.1, fill: true, }, { label: 'Benchmark Index', data: performanceData.index, borderColor: '#4B5563', borderDash: [5, 5], tension: 0.1, }, { label: 'Comparable Mutual Fund', data: performanceData.mutualFund, borderColor: '#F59E0B', borderDash: [5, 5], tension: 0.1, }] }, options: { responsive: true, maintainAspectRatio: false } });
+        }
+
+        async function fetchFunds() {
+            if (!db) { return; }
+            const loader = document.getElementById('loader');
+            try {
+                const querySnapshot = await getDocs(collection(db, "funds"));
+                allFunds = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderFunds(allFunds);
+            } catch (error) {
+                console.error("Error fetching funds:", error);
+                if (loader) { loader.innerHTML = '<p class="text-red-500 font-semibold">Could not fetch fund data. Please try again later.</p>'; }
+            }
+        }
+        
+        function applyFilters() {
+            const searchText = document.getElementById('search-text').value.toLowerCase();
+            const strategy = document.getElementById('filter-strategy').value;
+            const minReturn = parseFloat(document.getElementById('filter-returns').value) || 0;
+            const filteredFunds = allFunds.filter(fund => {
+                const matchesSearch = (fund.name?.toLowerCase() || '').includes(searchText) || (fund.manager?.toLowerCase() || '').includes(searchText);
+                const matchesStrategy = strategy === 'All' || fund.strategy === strategy;
+                const matchesReturn = fund.returns?.['1y'] >= minReturn;
+                return matchesSearch && matchesStrategy && matchesReturn;
+            });
+            renderFunds(filteredFunds);
+        }
+        
+        // This function sets up all user interface event listeners.
+        function setupEventListeners() {
             document.body.addEventListener('click', (e) => {
                 const navLink = e.target.closest('.nav-link');
                 if (navLink) {
                     e.preventDefault();
-                    console.log("DEBUG: Navigation link clicked.");
                     const pageId = navLink.dataset.page;
                     if (pageId) {
                         showPage(pageId);
-                        
                         const mobileMenu = document.getElementById('mobile-menu');
                         if (!mobileMenu.classList.contains('hidden')) {
                             mobileMenu.classList.add('hidden');
                         }
-                    } else {
-                         console.log("DEBUG: Clicked nav-link has no data-page attribute.");
                     }
                 }
             });
 
-            // Mobile Menu Toggle Listener
+            document.getElementById('apply-filters')?.addEventListener('click', applyFilters);
+
+            document.getElementById('aif-list')?.addEventListener('click', (e) => {
+                const button = e.target.closest('.view-details-btn');
+                if (button) {
+                    const fundId = button.dataset.id;
+                    renderFundDetails(fundId);
+                    showPage('detail');
+                }
+            });
+
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton?.addEventListener('click', () => {
-                console.log("DEBUG: Mobile menu button clicked.");
                 mobileMenu.classList.toggle('hidden');
             });
+        }
 
-            console.log("DEBUG: All UI listeners have been attached.");
+        // Main execution block that runs when the page is ready.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Step 1: Immediately make the page interactive.
+            setupEventListeners();
+
+            // Step 2: Try to connect to the database.
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                
+                // Step 3: If connection is successful, fetch the data.
+                fetchFunds();
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                const loader = document.getElementById('loader');
+                if (loader) {
+                    loader.innerHTML = '<p class="text-red-500 font-semibold text-center">Error: Could not connect to the database.<br>Please ensure the Firebase configuration is correct.</p>';
+                }
+            }
         });
 
     </script>
