@@ -3,506 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuffe Capital Advisors - AIF Research</title>
-    <!-- Tailwind CSS -->
+    <title>Cuffe Capital Advisors - Alternative Investment Funds (AIF) Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js for performance graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        /* Custom styles to enhance the design */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* light gray background */
-        }
-        .hero-bg {
-            background-color: #111827; /* dark blue/gray */
         }
         .page {
-            display: none; /* Hide all pages by default */
+            display: none;
         }
         .page.active {
-            display: block; /* Show active page */
+            display: block;
         }
         .chart-container {
             position: relative;
             height: 40vh;
             width: 100%;
         }
-        /* Loading Spinner */
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #6366f1;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Header / Navigation -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="nav-link text-2xl font-bold text-gray-900" data-page="home">
-                Cuffe Capital<span class="text-indigo-600">.</span>
-            </a>
-            <div class="space-x-6">
-                <a href="#" class="nav-link text-gray-600 hover:text-indigo-600 font-medium" data-page="home">Home</a>
-                <a href="#" class="nav-link text-gray-600 hover:text-indigo-600 font-medium" data-page="funds">AIF Finder</a>
-                <a href="#" class="nav-link text-gray-600 hover:text-indigo-600 font-medium" data-page="about">About Us</a>
-                <a href="#" class="nav-link text-gray-600 hover:text-indigo-600 font-medium" data-page="contact">Contact</a>
+            <a href="#" class="text-2xl font-bold text-gray-900 nav-link" data-page="home">Cuffe Capital Advisors</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-gray-900 nav-link" data-page="finder">AIF Finder</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 nav-link" data-page="about">About Us</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 nav-link" data-page="contact">Contact</a>
             </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
         </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-100 nav-link" data-page="finder">AIF Finder</a>
+            <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-100 nav-link" data-page="about">About Us</a>
+            <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-100 nav-link" data-page="contact">Contact</a>
+        </div>
     </header>
 
     <main>
-        <!-- Homepage Section -->
-        <section id="home" class="page active">
-            <div class="hero-bg text-white">
-                <div class="container mx-auto px-6 py-24 text-center">
-                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">Unlock the Potential of Alternative Investments in India</h1>
-                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">In-depth research, comparative analysis, and proprietary insights on India's leading Alternative Investment Funds.</p>
-                    <button class="nav-link bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-page="funds">
-                        Explore AIFs Now
-                    </button>
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <section class="bg-white">
+                <div class="container mx-auto px-6 py-20 text-center">
+                    <h1 class="text-5xl font-bold text-gray-900 mb-4">Unlocking Insights into India's AIF Landscape</h1>
+                    <p class="text-lg text-gray-600 mb-8">Data-driven research and proprietary analysis on Alternative Investment Funds.</p>
+                    <button class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 nav-link" data-page="finder">Explore AIFs Now</button>
                 </div>
-            </div>
-            <!-- Features Section -->
-            <div class="bg-white py-20">
+            </section>
+             <section class="py-16">
                 <div class="container mx-auto px-6">
-                    <h2 class="text-3xl font-bold text-center mb-12">Why Cuffe Capital?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-                        <div class="p-6">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H7a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-                            </div>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="bg-white p-8 rounded-lg shadow">
                             <h3 class="text-xl font-semibold mb-2">Comprehensive Data</h3>
-                            <p class="text-gray-600">Access a curated database of AIFs across all major categories and strategies in India.</p>
+                            <p class="text-gray-600">Access detailed performance metrics, fund manager history, and strategy breakdowns for hundreds of AIFs.</p>
                         </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Comparative Analysis</h3>
-                            <p class="text-gray-600">Benchmark AIF performance against relevant indices and comparable mutual funds to see the true alpha.</p>
+                        <div class="bg-white p-8 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-2">Proprietary View</h3>
+                            <p class="text-gray-600">Leverage our unique, in-depth analysis and ratings to make informed investment decisions.</p>
                         </div>
-                        <div class="p-6">
-                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold mb-2">Proprietary Insights</h3>
-                            <p class="text-gray-600">Leverage our expert, unbiased view on each fund to make more informed investment decisions.</p>
+                        <div class="bg-white p-8 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-2">Powerful Filters</h3>
+                            <p class="text-gray-600">Filter and compare funds by returns, strategy, AUM, and more to find the right fit for your portfolio.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- AIF Finder / Directory Section -->
-        <section id="funds" class="page">
-            <div class="container mx-auto px-6 py-12">
-                <h1 class="text-4xl font-bold mb-2">AIF Finder</h1>
-                <p class="text-gray-600 mb-8">Filter and search for Alternative Investment Funds based on your criteria.</p>
-
-                <!-- Filter Section -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <div>
-                            <label for="strategy-filter" class="block text-sm font-medium text-gray-700">Strategy</label>
-                            <select id="strategy-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                <option value="all">All Strategies</option>
-                                <option value="Long Only">Long Only</option>
-                                <option value="Long Short">Long Short</option>
-                                <option value="Private Equity">Private Equity</option>
-                                <option value="Venture Capital">Venture Capital</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="return-filter" class="block text-sm font-medium text-gray-700">Min. 3Y Return (CAGR)</label>
-                            <select id="return-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                <option value="0">Any</option>
-                                <option value="10">10%+</option>
-                                <option value="15">15%+</option>
-                                <option value="20">20%+</option>
-                                <option value="25">25%+</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                             <label for="search-filter" class="block text-sm font-medium text-gray-700">Search by Name or Manager</label>
-                             <input type="text" id="search-filter" placeholder="e.g., 'Quantum Leap' or 'Rakesh Mehta'" class="mt-1 block w-full pl-3 pr-4 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Loading state -->
-                <div id="loading-container" class="text-center py-16 flex flex-col items-center">
-                    <div class="loader mb-4"></div>
-                    <p class="text-lg text-gray-600">Fetching latest fund data...</p>
-                </div>
+        <!-- AIF Finder Page -->
+        <div id="page-finder" class="page">
+            <div class="container mx-auto p-6">
+                <h2 class="text-3xl font-bold mb-6">Alternative Investment Fund Finder</h2>
                 
-                <!-- Fund List -->
-                <div id="fund-list-container" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Fund cards will be dynamically inserted here -->
+                <!-- Filters -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="search-text" class="block text-sm font-medium text-gray-700">Search Fund/Manager</label>
+                        <input type="text" id="search-text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="filter-strategy" class="block text-sm font-medium text-gray-700">Strategy</label>
+                        <select id="filter-strategy" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="All">All Strategies</option>
+                            <option value="Long Short">Long Short</option>
+                            <option value="Private Equity">Private Equity</option>
+                            <option value="Venture Capital">Venture Capital</option>
+                            <option value="Real Estate">Real Estate</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-returns" class="block text-sm font-medium text-gray-700">Min. 1Y Return (%)</label>
+                        <input type="number" id="filter-returns" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 15">
+                    </div>
+                     <div>
+                        <button id="apply-filters" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Apply Filters</button>
+                    </div>
                 </div>
-                 <div id="no-results" class="hidden text-center py-16">
-                    <h3 class="text-xl font-semibold text-gray-700">No Funds Found</h3>
-                    <p class="text-gray-500 mt-2">Try adjusting your filters to find what you're looking for.</p>
+
+                <!-- AIF List -->
+                <div id="aif-list" class="space-y-4">
+                    <!-- Loading State -->
+                     <div id="loader" class="text-center py-10">
+                        <p class="text-lg font-semibold">Loading funds...</p>
+                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Fund Detail Page Section -->
-        <section id="details" class="page">
-            <div class="container mx-auto px-6 py-12">
-                <button id="back-to-funds" class="mb-8 text-indigo-600 hover:text-indigo-800 font-medium">
-                    &larr; Back to AIF List
-                </button>
+        <!-- Fund Detail Page -->
+        <div id="page-detail" class="page">
+            <div class="container mx-auto p-6">
+                <button class="mb-6 bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-300 nav-link" data-page="finder">&larr; Back to AIF Finder</button>
                 <div id="fund-detail-content">
-                    <!-- Dynamic content will be loaded here -->
+                    <!-- Dynamic content will be injected here -->
                 </div>
             </div>
-        </section>
-
-        <!-- Dummy pages for About and Contact -->
-        <section id="about" class="page">
-             <div class="container mx-auto px-6 py-20 text-center">
-                 <h1 class="text-4xl font-bold mb-4">About Cuffe Capital Advisors</h1>
-                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">We are a premier research firm dedicated to demystifying the world of Alternative Investment Funds for sophisticated investors in India. Our mission is to provide clarity, transparency, and actionable insights.</p>
+        </div>
+        
+        <!-- About Us Page -->
+        <div id="page-about" class="page">
+             <div class="container mx-auto p-6 py-12">
+                <h2 class="text-3xl font-bold mb-4">About Cuffe Capital Advisors</h2>
+                <p class="text-lg text-gray-600 leading-relaxed">Cuffe Capital Advisors was founded with a singular mission: to bring transparency, clarity, and data-driven insights to the often opaque world of Alternative Investment Funds in India. Our team of financial analysts and market experts is dedicated to providing investors with the tools and research necessary to navigate the complexities of the AIF landscape and make confident, informed decisions.</p>
             </div>
-        </section>
-        <section id="contact" class="page">
-             <div class="container mx-auto px-6 py-20 text-center">
-                 <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
-                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">Have questions? Reach out to our team of experts at <a href="mailto:research@cuffecapital.com" class="text-indigo-600">research@cuffecapital.com</a>.</p>
-            </div>
-        </section>
+        </div>
 
+        <!-- Contact Page -->
+        <div id="page-contact" class="page">
+            <div class="container mx-auto p-6 py-12">
+                <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+                <p class="text-lg text-gray-600">For inquiries, partnerships, or to learn more about our services, please reach out to us at <a href="mailto:info@cuffecapital.com" class="text-blue-600 hover:underline">info@cuffecapital.com</a>.</p>
+            </div>
+        </div>
     </main>
     
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 Cuffe Capital Advisors. All Rights Reserved.</p>
-            <p class="text-sm text-gray-400 mt-2">Disclaimer: Investments in AIFs are subject to market risks. Please read all scheme related documents carefully before investing.</p>
+    <footer class="bg-white mt-12">
+        <div class="container mx-auto px-6 py-4 text-center text-gray-600">
+            <p>&copy; 2024 Cuffe Capital Advisors. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase SDKs -->
     <script type="module">
-      // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAQYeeLnJ4OHhsUX50FunMb7x9fyVXP7ek",
-  authDomain: "cuffe-capital-advisors-7fba2.firebaseapp.com",
-  projectId: "cuffe-capital-advisors-7fba2",
-  storageBucket: "cuffe-capital-advisors-7fba2.firebasestorage.app",
-  messagingSenderId: "903434312798",
-  appId: "1:903434312798:web:5068c91b422426b1b828cf",
-  measurementId: "G-K9D5GKQSWX"
-};
+        // ***************************************************************
+        // PASTE YOUR FIREBASE CONFIGURATION HERE
+        // ***************************************************************
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        // ***************************************************************
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-        // Sign in user anonymously
-        signInAnonymously(auth).catch((error) => {
-            console.error("Anonymous sign-in failed:", error);
-        });
-        
-        // --- GLOBAL STATE ---
-        let fundsData = []; // This will hold the data from Firestore
-        
-        async function fetchFundsFromFirestore() {
-            const loadingContainer = document.getElementById('loading-container');
-            const fundListContainer = document.getElementById('fund-list-container');
-            
-            loadingContainer.style.display = 'flex';
-            fundListContainer.style.display = 'none';
-
-            try {
-                const querySnapshot = await getDocs(collection(db, "funds"));
-                fundsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                // Initial render after fetching
-                renderFunds();
-            } catch (error) {
-                console.error("Error fetching funds from Firestore:", error);
-                loadingContainer.innerHTML = '<p class="text-red-500">Failed to load fund data. Please try again later.</p>';
-            } finally {
-                loadingContainer.style.display = 'none';
-                fundListContainer.style.display = 'grid'; // Use grid to match initial state
-            }
-        }
-
-        // --- PAGE NAVIGATION LOGIC ---
-        // ... (This section remains unchanged)
-        const pages = document.querySelectorAll('.page');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const backToFundsBtn = document.getElementById('back-to-funds');
-
-        function showPage(pageId) {
-            pages.forEach(page => {
-                if (page.id === pageId) {
-                    page.classList.add('active');
-                } else {
-                    page.classList.remove('active');
-                }
-            });
-            window.scrollTo(0, 0); // Scroll to top on page change
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = e.currentTarget.getAttribute('data-page');
-                showPage(pageId);
-            });
-        });
-
-        if (backToFundsBtn) {
-            backToFundsBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPage('funds');
-            });
-        }
-        
-
-        // --- AIF FINDER LOGIC ---
-        // ... (The core filtering and rendering logic is mostly the same)
-        const fundListContainer = document.getElementById('fund-list-container');
-        const strategyFilter = document.getElementById('strategy-filter');
-        const returnFilter = document.getElementById('return-filter');
-        const searchFilter = document.getElementById('search-filter');
-        const noResultsDiv = document.getElementById('no-results');
+        let app;
+        let db;
+        let allFunds = [];
         let performanceChart = null;
-        
-        function renderFundCard(fund) {
-            return `
-                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col">
-                    <h3 class="text-xl font-bold text-gray-900">${fund.name}</h3>
-                    <p class="text-sm text-gray-500 mb-4">By ${fund.manager}</p>
-                    <div class="mb-4">
-                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${fund.strategy}</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4 text-center">
-                        <div>
-                            <p class="text-sm text-gray-500">3Y Return (CAGR)</p>
-                            <p class="text-lg font-semibold text-green-600">${fund.returns['3y'] || 'N/A'}%</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">1Y Return</p>
-                            <p class="text-lg font-semibold text-green-600">${fund.returns['1y'] || 'N/A'}%</p>
-                        </div>
-                    </div>
-                    <div class="mt-auto">
-                        <button class="view-details-btn w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300" data-id="${fund.id}">
-                            View Details
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        
-        function renderFunds() {
-            if (fundsData.length === 0) {
-                 // Don't render if data isn't loaded yet, but ensure loading isn't shown
-                 document.getElementById('loading-container').style.display = 'none';
-                 return;
-            }
-            const strategy = strategyFilter.value;
-            const minReturn = parseFloat(returnFilter.value);
-            const searchTerm = searchFilter.value.toLowerCase();
 
-            const filteredFunds = fundsData.filter(fund => {
-                const fundReturn3y = fund.returns && fund.returns['3y'] ? fund.returns['3y'] : -Infinity;
-                const matchesStrategy = strategy === 'all' || fund.strategy === strategy;
-                const matchesReturn = fundReturn3y >= minReturn;
-                const matchesSearch = fund.name.toLowerCase().includes(searchTerm) || fund.manager.toLowerCase().includes(searchTerm);
-                return matchesStrategy && matchesReturn && matchesSearch;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("Firebase initialized successfully.");
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.innerHTML = '<p class="text-red-500 font-semibold">Error: Could not connect to the database. Please check the Firebase configuration.</p>';
+            }
+        }
+
+        // --- Core Page Navigation Logic ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
-
-            if (filteredFunds.length > 0) {
-                fundListContainer.innerHTML = filteredFunds.map(renderFundCard).join('');
-                noResultsDiv.classList.add('hidden');
-                fundListContainer.classList.remove('hidden');
-            } else {
-                 fundListContainer.innerHTML = '';
-                 fundListContainer.classList.add('hidden');
-                 noResultsDiv.classList.remove('hidden');
+            const newPage = document.getElementById(`page-${pageId}`);
+            if (newPage) {
+                newPage.classList.add('active');
+                window.scrollTo(0, 0);
             }
         }
+        
+        function renderFunds(fundsToRender) {
+            const listElement = document.getElementById('aif-list');
+            if (!listElement) return;
 
-        // --- FUND DETAIL LOGIC ---
-        // ... (This section remains unchanged, as it works with the in-memory fundsData array)
+            listElement.innerHTML = ''; // Clear previous results
+            if (fundsToRender.length === 0) {
+                listElement.innerHTML = '<p class="text-center text-gray-600 py-10">No funds match your criteria.</p>';
+                return;
+            }
+
+            fundsToRender.forEach(fund => {
+                const fundCard = `
+                    <div class="bg-white p-6 rounded-lg shadow-md transition hover:shadow-xl">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                            <div class="md:col-span-2">
+                                <h3 class="text-xl font-bold text-gray-900">${fund.name}</h3>
+                                <p class="text-gray-600">${fund.manager}</p>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mt-2 px-2.5 py-0.5 rounded-full">${fund.strategy}</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-500">1Y Return</p>
+                                <p class="text-lg font-semibold">${fund.returns['1y']}%</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-500">3Y Return</p>
+                                <p class="text-lg font-semibold">${fund.returns['3y']}%</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="view-details-btn w-full bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-900 transition duration-300" data-id="${fund.id}">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listElement.innerHTML += fundCard;
+            });
+        }
+        
         function renderFundDetails(fundId) {
-            const fund = fundsData.find(f => f.id == fundId);
-            if (!fund) return;
-            
-            const detailContent = document.getElementById('fund-detail-content');
-            
-            detailContent.innerHTML = `
-                <!-- Header -->
-                <div class="mb-8">
-                    <h1 class="text-4xl font-bold text-gray-900">${fund.name}</h1>
-                    <p class="text-xl text-gray-600">Fund Manager: ${fund.manager}</p>
-                </div>
+            const fund = allFunds.find(f => f.id === fundId);
+            const contentElement = document.getElementById('fund-detail-content');
+            if (!fund || !contentElement) return;
 
-                <!-- Key Metrics -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 bg-white p-6 rounded-lg shadow-md">
-                    <div class="text-center">
-                        <p class="text-sm text-gray-500">Strategy</p>
-                        <p class="text-lg font-semibold">${fund.strategy}</p>
+            contentElement.innerHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold mb-2">${fund.name}</h2>
+                    <p class="text-lg text-gray-600 mb-6">Managed by: ${fund.manager}</p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center">
+                        <div><p class="text-sm text-gray-500">Strategy</p><p class="font-semibold">${fund.strategy}</p></div>
+                        <div><p class="text-sm text-gray-500">AUM (Cr)</p><p class="font-semibold">₹${fund.aum}</p></div>
+                        <div><p class="text-sm text-gray-500">Inception</p><p class="font-semibold">${fund.inception}</p></div>
+                        <div><p class="text-sm text-gray-500">Min. Investment (Cr)</p><p class="font-semibold">₹${fund.minInvestment}</p></div>
                     </div>
-                    <div class="text-center">
-                        <p class="text-sm text-gray-500">AUM</p>
-                        <p class="text-lg font-semibold">₹${fund.aum} Cr</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-sm text-gray-500">Min. Investment</p>
-                        <p class="text-lg font-semibold">₹${fund.minInvestment} Cr</p>
-                    </div>
-                     <div class="text-center">
-                        <p class="text-sm text-gray-500">Inception Date</p>
-                        <p class="text-lg font-semibold">${new Date(fund.inception).toLocaleDateString('en-IN', { year: 'numeric', month: 'short' })}</p>
-                    </div>
-                </div>
 
-                <!-- Performance Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-semibold mb-4">Performance vs. Benchmarks</h3>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4">Historical Performance vs. Benchmarks</h3>
                         <div class="chart-container">
                             <canvas id="performanceChart"></canvas>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-semibold mb-4">Historical Returns (CAGR)</h3>
-                        <table class="w-full text-left">
-                           <thead>
-                                <tr>
-                                    <th class="py-2 text-sm font-medium text-gray-500">Period</th>
-                                    <th class="py-2 text-sm font-medium text-gray-500 text-right">Return</th>
-                                </tr>
-                           </thead>
-                           <tbody class="divide-y">
-                                ${Object.entries(fund.returns).map(([period, value]) => `
-                                <tr>
-                                    <td class="py-2 capitalize">${period === 'si' ? 'Since Inception' : period}</td>
-                                    <td class="py-2 font-semibold text-right ${value > 0 ? 'text-green-600' : 'text-red-600'}">${value}%</td>
-                                </tr>
-                                `).join('')}
-                           </tbody>
-                        </table>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                             <h3 class="text-xl font-semibold mb-4">Returns (%)</h3>
+                            <table class="w-full text-left">
+                                <tbody class="divide-y">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 font-medium">1 Year</td><td class="text-right">${fund.returns['1y']}%</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 font-medium">3 Years (CAGR)</td><td class="text-right">${fund.returns['3y']}%</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 font-medium">5 Years (CAGR)</td><td class="text-right">${fund.returns['5y']}%</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 font-medium">Since Inception (CAGR)</td><td class="text-right">${fund.returns.si}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="text-xl font-semibold mb-3">Cuffe Capital's Proprietary View</h3>
+                            <p class="text-gray-700 leading-relaxed">${fund.proprietaryView}</p>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Proprietary View -->
-                <div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Cuffe Capital's Proprietary View</h3>
-                    <p class="text-gray-700 leading-relaxed">${fund.proprietaryView}</p>
-                </div>
             `;
+            
+            drawChart(fund.performanceData);
+        }
 
-            // Render Chart
-            const ctx = document.getElementById('performanceChart').getContext('2d');
+        function drawChart(performanceData) {
+            const ctx = document.getElementById('performanceChart')?.getContext('2d');
+            if (!ctx) return;
+
             if (performanceChart) {
                 performanceChart.destroy();
             }
+
             performanceChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: fund.performanceData.labels,
-                    datasets: [
-                        {
-                            label: fund.name,
-                            data: fund.performanceData.fund,
-                            borderColor: 'rgb(79, 70, 229)',
-                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.1,
-                            fill: true,
-                        },
-                        {
-                            label: 'Nifty 500 TRI',
-                            data: fund.performanceData.index,
-                            borderColor: 'rgb(203, 213, 225)',
-                            borderWidth: 2,
-                            tension: 0.1,
-                            borderDash: [5, 5],
-                        },
-                        {
-                            label: 'Comparable MF Category',
-                            data: fund.performanceData.mutualFund,
-                            borderColor: 'rgb(107, 114, 128)',
-                            borderWidth: 2,
-                            tension: 0.1,
-                        }
-                    ]
+                    labels: performanceData.labels,
+                    datasets: [{
+                        label: 'Fund Performance',
+                        data: performanceData.fund,
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.1,
+                        fill: true,
+                    }, {
+                        label: 'Benchmark Index',
+                        data: performanceData.index,
+                        borderColor: 'rgb(107, 114, 128)',
+                        borderDash: [5, 5],
+                        tension: 0.1,
+                    }, {
+                        label: 'Comparable Mutual Fund',
+                        data: performanceData.mutualFund,
+                        borderColor: 'rgb(234, 179, 8)',
+                        borderDash: [5, 5],
+                        tension: 0.1,
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    return '₹' + value;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Growth of ₹100 Invested'
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    }
+                }
+            });
+        }
+
+        async function fetchFunds() {
+            if (!db) {
+                console.log("Firestore database is not available.");
+                return;
+            }
+            const loader = document.getElementById('loader');
+            try {
+                const querySnapshot = await getDocs(collection(db, "funds"));
+                allFunds = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderFunds(allFunds);
+            } catch (error) {
+                console.error("Error fetching funds:", error);
+                if (loader) {
+                    loader.innerHTML = '<p class="text-red-500 font-semibold">Could not fetch fund data. Please try again later.</p>';
+                }
+            }
+        }
+        
+        function applyFilters() {
+            const searchText = document.getElementById('search-text').value.toLowerCase();
+            const strategy = document.getElementById('filter-strategy').value;
+            const minReturn = parseFloat(document.getElementById('filter-returns').value) || 0;
+
+            const filteredFunds = allFunds.filter(fund => {
+                const matchesSearch = fund.name.toLowerCase().includes(searchText) || fund.manager.toLowerCase().includes(searchText);
+                const matchesStrategy = strategy === 'All' || fund.strategy === strategy;
+                const matchesReturn = fund.returns['1y'] >= minReturn;
+                return matchesSearch && matchesStrategy && matchesReturn;
+            });
+
+            renderFunds(filteredFunds);
+        }
+
+        // --- THE FIX: Wait for the DOM to be fully loaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM fully loaded and parsed. Initializing app.");
+            
+            // Initial fetch of data
+            fetchFunds();
+
+            // Setup navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = e.currentTarget.dataset.page;
+                    showPage(pageId);
+                });
+            });
+
+            // Setup filter button
+            document.getElementById('apply-filters')?.addEventListener('click', applyFilters);
+
+            // Setup dynamic "View Details" buttons
+            document.getElementById('aif-list')?.addEventListener('click', (e) => {
+                if (e.target && e.target.classList.contains('view-details-btn')) {
+                    const fundId = e.target.dataset.id;
+                    renderFundDetails(fundId);
+                    showPage('detail');
                 }
             });
 
-            showPage('details');
-        }
-
-        // --- EVENT LISTENERS ---
-        [strategyFilter, returnFilter].forEach(el => el.addEventListener('change', renderFunds));
-        searchFilter.addEventListener('keyup', renderFunds);
-
-        fundListContainer.addEventListener('click', function(e) {
-            const button = e.target.closest('.view-details-btn');
-            if (button) {
-                const fundId = button.getAttribute('data-id');
-                renderFundDetails(fundId);
-            }
-        });
-        
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', function() {
-            // Fetch data from Firestore as soon as the DOM is ready
-            fetchFundsFromFirestore();
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton?.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
         });
 
     </script>
-
 </body>
 </html>
+
+
 
